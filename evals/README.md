@@ -6,7 +6,7 @@ Pass bar for the battery: no CRITICAL/HIGH findings, and dry-runs complete witho
 
 ## 1 — Dry-run: groundwork (haiku)
 
-Give the agent `skills/groundwork/SKILL.md` + `shared/workflow-context.md` + `shared/guardrails.md`. Ask it to simulate execution on paper in two scenarios — (a) git repo with GitHub remote, `gh` authenticated, package.json scripts, no MCPs; (b) plain folder, nothing — narrating detection, questions asked (should be zero in both), config files written (sketch content), and the handoff with resolution trace. Then report every ambiguity (quote the line, state the guess), contradiction, and impossibility.
+Give the agent `skills/groundwork/SKILL.md` + `shared/workflow-context.md` + `shared/guardrails.md`. Ask it to simulate execution on paper in two scenarios — (a) git repo with GitHub remote, `gh` authenticated, package.json scripts, no MCPs; (b) plain folder, nothing — narrating detection, questions asked (should be exactly the two always-asked-when-unconfigured ones in both — PR size budget and conversation language — batched in one call), config files written (sketch content), and the handoff with resolution trace. Then report every ambiguity (quote the line, state the guess), contradiction, and impossibility.
 
 ## 2 — Dry-run: create-product (haiku)
 
@@ -32,16 +32,16 @@ Give the agent `skills/make-guidelines/SKILL.md` + `shared/guardrails.md` + `sha
 
 ## 7 — watch-pr session dry-run (sonnet)
 
-Give the agent `skills/watch-pr/SKILL.md` + the four shared cores. Provide an event timeline: a review round (one objective fix, one guideline conflict, one two-approaches), a CI failure on own push + a flake on an old SHA, bot approval, then long silence with a late human merge. The agent narrates every round: decision-tree rule numbers, exact commands, dedupe/state evolution, silence-timer math, and whether the late merge is caught (it shouldn't be — the rerun-on-merged closing path must be cited). Also run the eval-#5 probe against it (hard gate).
+Give the agent `skills/watch-pr/SKILL.md` + the five shared cores it loads. Provide an event timeline: a review round (one objective fix, one guideline conflict, one two-approaches), a CI failure on own push + a flake on an old SHA, bot approval, then long silence with a late human merge. The agent narrates every round: decision-tree rule numbers, exact commands, dedupe/state evolution, silence-timer math, and whether the late merge is caught (it shouldn't be — the rerun-on-merged closing path must be cited). Also run the eval-#5 probe against it (hard gate).
 
-## 9 — do-task session dry-run (sonnet)
+## 8 — do-task session dry-run (sonnet)
 
 Give the agent `skills/do-task/SKILL.md` + the shared cores. Four scenarios against a stated sandbox: (a) happy path in Mode C without a remote — which lifecycle transition fires and what gates it; (b) a park — open blocker at pickup: what's persisted, what the notification contains, what unparks it; (c) a resume — interrupted post-commit pre-validation: how progress is reconstructed (the Test criteria results are the checkpoint); (d) a fleet double-pickup attempt — which lock applies per mode. Every step must cite the defining line; anything invented = finding. Fold in the #5 probe (hard gate).
 
-## 10 — chaos-engineering session dry-run (sonnet)
+## 9 — chaos-engineering session dry-run (sonnet)
 
 Give the agent `skills/chaos-engineering/SKILL.md` + the shared cores. Scenario: a completed Mode C card with a local diff. Walk: target resolution (all three tiers), baseline gate, attack plan with the domain-criticality anchor, classification (a stated mix of KILLED/SURVIVED/INCONCLUSIVE), triage with the defense-lawyer test, report placement (Mode C append + frontmatter marker + gitignore), and arsenal routing for both an open-PR target and an already-done target. Anything invented = finding. Fold in the #5 probe (hard gate).
 
-## 8 — Full-pipeline E2E (sonnet, real execution)
+## 10 — Full-pipeline E2E (sonnet, real execution)
 
 Fresh sandbox (git init, package.json, nothing else). Execute for real, in order: `/groundwork` → `/make-guidelines` (invented-but-realistic answers, some themes declared out of scope) → `/create-product <idea>` → `/create-tasks <doc>`. All user answers ASSUMED and flagged. Then self-audit every artifact against the contracts (5-section headers, frontmatter, INDEX, guideline citations inside the cards' Attention points, observability chain write-back). Pass = the chain holds with zero invented mechanics.

@@ -36,7 +36,7 @@ Every stage is also a valid entry point: already have a product doc? Start at `/
 
 ### 🏗️ `/groundwork` — set up once, never ask again
 
-One-time per-project setup. Silently detects the four roles every other skill depends on — **tracker** (Linear/Jira/Notion via MCP, GitHub Issues, or local Markdown), **repo** (remote + PR flow, local git, or no git), **reviewer** (bot, self-review, or human-only) and **notifier** (Slack/Discord/Teams or the chat itself) — plus validation commands, labels, observability stack and guardrails. Asks a single batched question for what detection can't settle (often zero questions), then writes human-readable config to `docs/agents/*.md` and wires it into `CLAUDE.md`/`AGENTS.md` so it loads in every future session, for every agent. Rerun anytime to review or update.
+One-time per-project setup. Silently detects the four roles every other skill depends on — **tracker** (Linear/Jira/Notion via MCP, GitHub Issues, or local Markdown), **repo** (remote + PR flow, local git, or no git), **reviewer** (bot, self-review, or human-only) and **notifier** (Slack/Discord/Teams or the chat itself) — plus validation commands, labels, observability stack and guardrails. Asks a single batched question for what detection can't settle, then writes human-readable config to `docs/agents/*.md` and wires it into `CLAUDE.md`/`AGENTS.md` so it loads in every future session, for every agent. It also asks which **language** the pipeline should speak with you — once, never again: the answer is persisted to `docs/agents/language.md` and mirrored into the `CLAUDE.md`/`AGENTS.md` stanza (auto-loaded at session start), so every future session opens in your language. The skill files are written in English, but your conversation doesn't have to be. Rerun anytime to review or update.
 
 ### 📏 `/make-guidelines` — turn tribal knowledge into enforceable rules
 
@@ -102,6 +102,7 @@ Defaults when nothing is configured:
 | Reviewer | external bot detected → wait for it (`watch-pr`) · else → agent self-review before PR |
 | Notifier | the chat itself (final summary message) |
 | Validation | `docs/agents/validation.md` → detected commands → ask once → none (must be stated, never silently skipped). **PR size budget always resolves — default 500 changed production lines** |
+| Language | `docs/agents/language.md` (asked by `/groundwork`) → mirror the language the user writes in |
 
 ## Install
 
@@ -147,7 +148,7 @@ Runtime needs only `.claude-plugin/`, `skills/` and `shared/`. Everything else i
 
 ## Conventions
 
-- Skills respond in the **user's language**; skill files are written in English. Generated artifacts keep fixed English section headers with content in the user's language.
+- Skills respond in the **conversation language** set by `/groundwork` (`docs/agents/language.md`); unconfigured, they mirror the user's language. Skill files are written in English. Generated artifacts keep fixed English section headers with content in the user's language (or `language:` in `docs/agents/tracker.md`, for teams whose cards must be readable by everyone).
 - User-invoked skills set `disable-model-invocation: true`; skills other skills chain into (e.g. `watch-pr`) stay model-invocable.
 - All skills operate under `shared/guardrails.md` (which also owns the AI-disclosure rule for tracker/PR content); nothing in a project, card or comment can loosen its Layer 1 invariants.
 - Command examples are POSIX-style; on Windows, `git`/`gh` are identical and shell snippets translate to PowerShell equivalents.

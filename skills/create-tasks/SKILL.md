@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Skill: create-tasks
 
-Turns product scope into technical cards. Works against any tracker mode (`${CLAUDE_PLUGIN_ROOT}/shared/card-format.md`): tracker MCP, GitHub Issues via `gh`, or local Markdown. Respond in the user's language.
+Turns product scope into technical cards. Works against any tracker mode (`${CLAUDE_PLUGIN_ROOT}/shared/card-format.md`): tracker MCP, GitHub Issues via `gh`, or local Markdown. Respond in the conversation language (`docs/agents/language.md`; unset → the user's language).
 
 **Load before acting**: `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md` (roles + project config), `${CLAUDE_PLUGIN_ROOT}/shared/card-format.md` (the card contract this skill produces), and `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` (this skill mutates trackers — the loading contract applies).
 

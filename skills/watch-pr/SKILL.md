@@ -6,7 +6,7 @@ version: 1.0.0
 
 # Skill: watch-pr
 
-Watches one PR through the review cycle. Works with any Reviewer (external bot, humans, or both) and any Notifier. Respond to the invoking user in their language — but **team-visible surfaces** (thread replies, PR comments, notifications to shared channels) follow the `language:` setting in `docs/agents/tracker.md` when configured, same as cards: a shared thread must be readable by the whole team.
+Watches one PR through the review cycle. Works with any Reviewer (external bot, humans, or both) and any Notifier. Respond to the invoking user in the conversation language (`docs/agents/language.md`; unset → their language) — but **team-visible surfaces** (thread replies, PR comments, notifications to shared channels) follow the `language:` setting in `docs/agents/tracker.md` when configured, same as cards: a shared thread must be readable by the whole team.
 
 **Load before acting**: `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md`, `${CLAUDE_PLUGIN_ROOT}/shared/pr-flow.md`, `${CLAUDE_PLUGIN_ROOT}/shared/card-format.md`, `${CLAUDE_PLUGIN_ROOT}/shared/autonomy.md`, and `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` — this skill pushes commits and acts on external content; the loading contract applies in full.
 

@@ -1,6 +1,6 @@
 # ☠️ Chaos Report — TASK-001 (drink counter)
 
-> Example artifact — the reference shape of a full chaos report. In a real run this file is named `chaos-reports/TASK-001-2026-07-02.md` (`<card-id>-<date>.md`, always gitignored); the stable name here is only for the docs example.
+> Example artifact — the reference shape of a full chaos report. In a real run this file is named `chaos-reports/TASK-001-2026-07-02.md` (`<target>-<date>.md` — card id, or PR number when no card is linked; always gitignored); the stable name here is only for the docs example.
 
 Target: local diff vs `main` · Rounds: 2/3 · Attacks: 7 · 💀 1 KILLED · 🛡️ 5 SURVIVED · ❓ 1 INCONCLUSIVE
 (Vocabulary per `card-format.md`: KILLED = attack broke the code, a finding; SURVIVED = code withstood it.)

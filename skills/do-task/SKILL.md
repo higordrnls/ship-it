@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Skill: do-task
 
-Executes one card through the full cycle. Thin orchestrator: the card supplies the contract, the guidelines supply the rules, `pr-flow` supplies the PR mechanics, `watch-pr` supplies the review cycle. Respond to the invoking user in their language; team-visible surfaces follow `language:` in `docs/agents/tracker.md`.
+Executes one card through the full cycle. Thin orchestrator: the card supplies the contract, the guidelines supply the rules, `pr-flow` supplies the PR mechanics, `watch-pr` supplies the review cycle. Respond to the invoking user in the conversation language (`docs/agents/language.md`; unset → their language); team-visible surfaces follow `language:` in `docs/agents/tracker.md`.
 
 **Load before acting**: `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md`, `${CLAUDE_PLUGIN_ROOT}/shared/card-format.md`, `${CLAUDE_PLUGIN_ROOT}/shared/pr-flow.md`, `${CLAUDE_PLUGIN_ROOT}/shared/autonomy.md`, and `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` — this skill writes code, commits and pushes; the loading contract applies in full.
 

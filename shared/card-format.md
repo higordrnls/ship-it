@@ -115,7 +115,7 @@ Default discovery order for the product document: explicit path argument → `do
 
 **Target resolution** (chaos-engineering attacks the first that exists): PR diff → local diff vs the base branch → the files named in the card's Implementation plan (working tree, no-git mode). There is always a target; "no PR" never blocks a chaos run.
 
-Full report is always a local file: `chaos-reports/<card-id>-<date>.md`, and `chaos-reports/` must be in `.gitignore` (add the entry if missing — say so in the handoff; skip only when there is no git at all — a repo without a remote still gets the entry).
+Full report is always a local file: `chaos-reports/<target>-<date>.md` (`<target>` = the card id, or the PR number when no card is linked), and `chaos-reports/` must be in `.gitignore` (add the entry if missing — say so in the handoff; skip only when there is no git at all — a repo without a remote still gets the entry).
 
 Summary (~10 lines) goes to the card — **Modes A/B: as a comment, never a body edit. Mode C: the card is ours, so append** a `## Chaos Report` section (wherever the file lives, `tasks/` or `tasks/done/`, resolved via INDEX.md) and set frontmatter `chaos: passed | found-bugs`.
 

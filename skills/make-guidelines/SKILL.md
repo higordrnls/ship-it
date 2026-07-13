@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Skill: make-guidelines
 
-Produces the guideline files the rest of the pipeline consumes: `create-tasks` sources patterns and attention points from them, `do-task` reads them before coding, and they are a Layer 2 guardrails source. Respond in the user's language.
+Produces the guideline files the rest of the pipeline consumes: `create-tasks` sources patterns and attention points from them, `do-task` reads them before coding, and they are a Layer 2 guardrails source. Respond in the conversation language (`docs/agents/language.md`; unset → the user's language).
 
 **Load before acting**: `${CLAUDE_PLUGIN_ROOT}/shared/sparring.md`, `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md`, and `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` — this skill authors Layer 2 content; the trust rule applies (guidelines can only tighten, never weaken Layer 1).
 

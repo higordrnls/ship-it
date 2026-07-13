@@ -92,6 +92,13 @@ Hybrid state (`platform: none` but a real logger configured): cards specify what
 
 Whatever the outcome — detected stack, accepted logger, or declined-to-console — **write it back** to `docs/agents/observability.md` (platform, logger, event naming, dashboards/alerts location) so it is never asked again. Whether a given card needs observability at all is the skill's own judgment (new surface → yes; refactor/docs → usually no) — the ask above is about the *stack*, not permission per card.
 
+## Language (conversation vs artifacts)
+
+Two independent settings, two owners:
+
+- **Conversation language** — the language skills use to talk to the invoking user (skill files are English; the conversation doesn't have to be). Resolution: `conversation:` in `docs/agents/language.md` → mirror the language the user is writing in. `/groundwork` always asks this when unconfigured, writes the answer back, **and mirrors it as one line in the `## Agent skills` stanza of `CLAUDE.md`/`AGENTS.md`** (auto-loaded at session start) — so the very first reply of any future session is already in the right language, before any skill loads config. Asked once, never again.
+- **Artifact language** — team-visible content (cards, PR/tracker comments, notifications to shared channels): `language:` in `docs/agents/tracker.md` (consumed via `card-format.md`). Default: the user's language.
+
 ## Autonomy contract (automode)
 
 Owned by `autonomy.md` (same folder): invoking a skill authorizes its full flow; escalations follow the **park protocol** (persist → notify → exit clean), never hang; park markers per mode; parked cards are never auto-picked; fleets require a shared substrate and a real Notifier. The automode skills load it directly.
@@ -125,6 +132,7 @@ docs/agents/tracker.md      # tracker + scope · product_docs · base_branch · 
 docs/agents/labels.md       # role → actual label map (see pr-flow.md)
 docs/agents/reviewer.md     # <bot login> | self-review | human-only · watch: on|off · escalation (over-budget review target)
 docs/agents/notifier.md     # channel + target
+docs/agents/language.md     # conversation: — the language skills use with the user (artifact language lives in tracker.md)
 docs/agents/validation.md   # lint / typecheck / test commands per workspace · PR size budget
 docs/agents/observability.md # platform · logger · conventions (event naming, dashboards/alerts location)
 docs/agents/guardrails.md   # optional — Layer 2: extra protected paths / forbidden ops (see guardrails.md)

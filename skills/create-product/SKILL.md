@@ -7,7 +7,9 @@ disable-model-invocation: true
 
 # Skill: create-product
 
-Entry point of the pipeline. Anyone — founder, dev, designer, PM, whoever — brings raw material and leaves with a product document that `/create-tasks` can split into technical cards. The pipeline makes no assumption about who writes product scope or where: the document is produced by interview, not by role. Respond in the user's language.
+Entry point of the pipeline. Anyone — founder, dev, designer, PM, whoever — brings raw material and leaves with a product document that `/create-tasks` can split into technical cards. The pipeline makes no assumption about who writes product scope or where: the document is produced by interview, not by role. Respond in the conversation language (`docs/agents/language.md`; unset → the user's language).
+
+**Load before acting**: `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md`, `${CLAUDE_PLUGIN_ROOT}/shared/sparring.md`, and `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` — this skill writes product docs and may publish tracker items; the loading contract applies.
 
 Accepted input: free text in the argument, a path to a rough doc, "this conversation", or nothing at all (start from zero).
 

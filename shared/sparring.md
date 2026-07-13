@@ -11,7 +11,7 @@ Spar with the user's idea: question it relentlessly until you reach shared under
 - **Follow dependencies.** When an answer opens new branches, walk them before moving to the next top-level topic.
 - **Punch at the weak spots first**: the riskiest assumption, the undefined user, the success metric nobody stated. Easy questions warm nothing up.
 - **The caller defines the minimum topic checklist** (e.g. `create-product` § 2); sparring guarantees the loop mechanics, not the coverage list.
-- Respond in the user's language.
+- Respond in the conversation language (`workflow-context.md` § Language; unset → the user's language).
 
 ## Completion
 

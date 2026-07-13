@@ -7,7 +7,7 @@ disable-model-invocation: true
 
 # Skill: chaos-engineering
 
-Where `/do-task` builds, this tries to break. It takes a just-implemented change and writes tests whose only goal is to prove it fails. Respond to the invoking user in their language; team-visible surfaces follow `language:` in `docs/agents/tracker.md`.
+Where `/do-task` builds, this tries to break. It takes a just-implemented change and writes tests whose only goal is to prove it fails. Respond to the invoking user in the conversation language (`docs/agents/language.md`; unset → their language); team-visible surfaces follow `language:` in `docs/agents/tracker.md`.
 
 Philosophy: **an attack that SURVIVED is also a result.** The goal isn't to find bugs at any cost — it's to map where the code holds and where it cedes, and leave the tests that matter as regression inheritance.
 

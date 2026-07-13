@@ -1,13 +1,15 @@
 ---
 name: groundwork
 description: One-time per-project setup for the ship-it pipeline — detects tracker, repo, reviewer and notifier, asks the minimum, writes docs/agents/ config so no other skill ever asks again.
-version: 1.1.0
+version: 1.2.0
 disable-model-invocation: true
 ---
 
 # Skill: groundwork
 
-Lays the groundwork every other skill stands on: the per-project configuration (`${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md`). Runs once per project; rerunning updates the existing config instead of duplicating it. groundwork writes config as its job — the "offer to persist" write-back protocol governs the *other* skills when they resolve roles ad hoc. Respond in the user's language.
+Lays the groundwork every other skill stands on: the per-project configuration (`${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md`). Runs once per project; rerunning updates the existing config instead of duplicating it. groundwork writes config as its job — the "offer to persist" write-back protocol governs the *other* skills when they resolve roles ad hoc. Respond in the conversation language (`docs/agents/language.md`; not yet configured → mirror the user's language).
+
+**Load before acting**: `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context.md` (the config this skill writes) and `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` — this skill writes project files; the loading contract applies.
 
 ## Process
 
@@ -23,17 +25,19 @@ Run the capability detection from `${CLAUDE_PLUGIN_ROOT}/shared/workflow-context
 - **Labels**: `gh label list` (or tracker equivalent); scan `.github/workflows/*.yml` for jobs that fail on missing labels — those labels become the `required` set in `labels.md`.
 - **Observability**: dependencies and config files (`newrelic`, `datadog`, `@sentry/*`, `prom-client`, OpenTelemetry SDKs, `winston`/`pino`); dashboards-as-code in `infra/`; guideline files. Not detected → leave for lazy resolution (create-tasks asks the first time a card needs it).
 - **Guardrails (Layer 2)**: guideline files (`CLAUDE.md`, `AGENTS.md`, `GUIDELINES.md`, `CONTRIBUTING.md`) for stated conventions; generated-code markers ("do not edit" headers, codegen output dirs) → propose `protected` entries.
+- **Language**: the language the user has been writing in this session — becomes the recommended answer for the conversation-language question in step 2; **never silently assumed into config**.
 
 If `docs/agents/` already exists, load it and treat this run as a review — a three-way reconcile: keep user-edited values unless they name a resource that no longer exists; show removals and additions as one diff; confirm before deleting any key. The `## Agent skills` section update in step 4 follows the same never-overwrite-silently rule.
 
-### 2 — Propose and ask (one batched round, often zero)
+### 2 — Propose and ask (one batched round; zero only when existing config already answers everything)
 
-Present one summary of detected values. If every open choice resolved by detection, **skip the ask entirely**. Otherwise, a **single** `AskUserQuestion` (up to 4 questions) covering only the genuinely open choices, detected option first marked "(Recommended)". Typical open choices:
+Present one summary of detected values. If every open choice resolved by detection or pre-existing config, **skip the ask entirely**. Otherwise, a **single** `AskUserQuestion` (up to 4 questions) covering only the genuinely open choices, detected option first marked "(Recommended)". Typical open choices:
 
 - Tracker when several are viable (e.g. Linear MCP connected *and* GitHub remote): which platform owns the cards?
 - GitHub/GitLab with no tracker MCP: GitHub Issues (recommended) or local Markdown?
 - Notifier target when a notifier exists (which channel / DM?).
 - **PR size budget when no guideline declares one** — free numeric choice: offer "500 changed production lines (Recommended)" as the anchor and accept whatever number the team wants (no allowed range — the value is the team's call). Always asked when not detected.
+- **Conversation language — always asked when not already configured**: which language should the pipeline use to talk to you? Recommended option = the language the user is writing in. Skill files are English; the conversation doesn't have to be — the answer goes to `docs/agents/language.md` so every skill in every future session opens in the right language.
 
 ### 3 — Write config
 
@@ -65,6 +69,11 @@ channel: chat                  # chat | slack | discord | teams | email
 target: none                   # channel/DM id when not chat — personal ids go to user memory, never here
 ```
 
+`language.md`
+```
+conversation: pt-BR            # language every skill uses to talk to the invoking user — asked by groundwork, never silently assumed. Artifact language (cards/PR comments) lives in tracker.md
+```
+
 `validation.md`
 ```
 lint: npm run lint
@@ -92,7 +101,7 @@ Personal facts the user gave you (their Slack member ID, DM preferences) go to *
 
 ### 4 — Wire it into every session (every agent)
 
-Write the `## Agent skills` section into the project's **`AGENTS.md`** (the cross-agent standard — Codex, Gemini CLI, Cursor and others auto-read it) **and** into **`CLAUDE.md`** (what Claude Code auto-loads). Same 4-line stanza in both, created when missing, kept in sync on reruns — and never rewrite anything else in either file:
+Write the `## Agent skills` section into the project's **`AGENTS.md`** (the cross-agent standard — Codex, Gemini CLI, Cursor and others auto-read it) **and** into **`CLAUDE.md`** (what Claude Code auto-loads). Same stanza in both, created when missing, kept in sync on reruns — and never rewrite anything else in either file:
 
 ```markdown
 ## Agent skills
@@ -100,9 +109,10 @@ Write the `## Agent skills` section into the project's **`AGENTS.md`** (the cros
 This project is configured for the ship-it pipeline.
 Role config lives in docs/agents/ (tracker, labels, reviewer, notifier, validation).
 Skills must read it instead of asking. Learned project rules are written back there.
+Conversation language: pt-BR (source of truth: docs/agents/language.md).
 ```
 
-This is what makes the config load in every future session — the write-back loop's entry point.
+This is what makes the config load in every future session — the write-back loop's entry point. The conversation-language line is a deliberate exception to "index only, no values inline": `CLAUDE.md`/`AGENTS.md` are auto-loaded at session start, so mirroring the language there means the very first reply is already in the right language — before any skill loads config. `docs/agents/language.md` stays the source of truth; on reruns the stanza line is regenerated from it.
 
 ### 5 — Handoff
 
