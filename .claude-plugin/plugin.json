@@ -1,0 +1,10 @@
+{
+  "name": "delivery-skills",
+  "description": "Platform-agnostic engineering pipeline: groundwork, make-guidelines, create-product, create-tasks, do-task, watch-pr, chaos-engineering.",
+  "version": "1.1.0",
+  "author": {
+    "name": "Samuel Santos"
+  },
+  "homepage": "https://github.com/samsantosb/delivery-skills",
+  "repository": "https://github.com/samsantosb/delivery-skills"
+}
