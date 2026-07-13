@@ -1,6 +1,6 @@
 ---
 name: groundwork
-description: One-time per-project setup for the delivery-skills pipeline — detects tracker, repo, reviewer and notifier, asks the minimum, writes docs/agents/ config so no other skill ever asks again.
+description: One-time per-project setup for the ship-it pipeline — detects tracker, repo, reviewer and notifier, asks the minimum, writes docs/agents/ config so no other skill ever asks again.
 version: 1.1.0
 disable-model-invocation: true
 ---
@@ -97,7 +97,7 @@ Write the `## Agent skills` section into the project's **`AGENTS.md`** (the cros
 ```markdown
 ## Agent skills
 
-This project is configured for the delivery-skills pipeline.
+This project is configured for the ship-it pipeline.
 Role config lives in docs/agents/ (tracker, labels, reviewer, notifier, validation).
 Skills must read it instead of asking. Learned project rules are written back there.
 ```

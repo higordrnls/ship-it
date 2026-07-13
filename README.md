@@ -1,4 +1,4 @@
-# 🚚 Delivery Skills
+# 🚢 ship-it
 
 **An idea-to-merged-PR delivery pipeline for Claude Code** — seven skills that take raw ideas through product docs, technical cards, implementation, PR review and adversarial testing. Platform-agnostic, role-agnostic, and portable to any coding agent.
 
@@ -6,7 +6,7 @@
 
 ## Why this exists
 
-Coding agents are great at writing code and terrible at *delivery*: scoping work, splitting it into reviewable chunks, respecting a team's conventions, surviving code review, and proving the result doesn't break. Delivery Skills packages that missing discipline as a pipeline:
+Coding agents are great at writing code and terrible at *shipping*: scoping work, splitting it into reviewable chunks, respecting a team's conventions, surviving code review, and proving the result doesn't break. ship-it packages that missing discipline as a pipeline:
 
 - **Skills are generic process** — they never contain facts about a specific repo.
 - **Everything project-specific is config**, written into each project once by `/groundwork` (`docs/agents/*.md`).
@@ -109,12 +109,12 @@ This is a Claude Code **plugin** — install it whole. Copying `skills/*` out of
 
 ```bash
 # A) Try it for one session:
-git clone https://github.com/samsantosb/delivery-skills
-claude --plugin-dir ./delivery-skills
+git clone https://github.com/samsantosb/ship-it
+claude --plugin-dir ./ship-it
 
 # B) Install permanently — the repo is its own marketplace:
-/plugin marketplace add samsantosb/delivery-skills
-/plugin install delivery-skills
+/plugin marketplace add samsantosb/ship-it
+/plugin install ship-it
 ```
 
 Run `/groundwork` inside each project before first use (optional — skills fall back to detection + defaults).
@@ -122,8 +122,8 @@ Run `/groundwork` inside each project before first use (optional — skills fall
 **Headless / fleet invocation** (VMs, CI, automation) — plugin skills are namespaced `/plugin-name:skill-name`:
 
 ```bash
-claude --bare --plugin-dir /path/to/delivery-skills \
-  -p "/delivery-skills:do-task tasks/TASK-007.md" \
+claude --bare --plugin-dir /path/to/ship-it \
+  -p "/ship-it:do-task tasks/TASK-007.md" \
   --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
 ```
 

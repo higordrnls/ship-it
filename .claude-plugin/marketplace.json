@@ -1,11 +1,11 @@
 {
-  "name": "delivery-skills",
+  "name": "ship-it",
   "owner": {
     "name": "Samuel Santos"
   },
   "plugins": [
     {
-      "name": "delivery-skills",
+      "name": "ship-it",
       "source": "./",
       "description": "Platform-agnostic engineering pipeline: groundwork, make-guidelines, create-product, create-tasks, do-task, watch-pr, chaos-engineering."
     }
