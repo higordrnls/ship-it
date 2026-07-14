@@ -1,6 +1,6 @@
 # 🚢 ship-it
 
-**An idea-to-merged-PR delivery pipeline for Claude Code** — seven skills that take raw ideas through product docs, technical cards, implementation, PR review and adversarial testing. Platform-agnostic, role-agnostic, and portable to any coding agent.
+**An idea-to-merged-PR delivery pipeline for any coding agent** — Claude Code, Kiro, opencode, Codex, Gemini CLI, Cursor, aider and beyond. Seven skills that take raw ideas through product docs, technical cards, implementation, PR review and adversarial testing. Platform-agnostic, role-agnostic, harness-agnostic.
 
 > An idea and a terminal are enough. You don't need a PM, a tracker, or a team to ship like one.
 
@@ -12,7 +12,7 @@ Coding agents are great at writing code and terrible at *shipping*: scoping work
 - **Everything project-specific is config**, written into each project once by `/groundwork` (`docs/agents/*.md`).
 - **Everything learned during execution is knowledge**, written back to the project so it's never asked again.
 
-One canonical copy, installed as a plugin — never vendored per repository.
+One canonical copy per machine — never vendored per repository. The skills are plain-markdown playbooks: any agent that can read files and run `git` can execute them.
 
 ## The pipeline
 
@@ -106,19 +106,32 @@ Defaults when nothing is configured:
 
 ## Install
 
-This is a Claude Code **plugin** — install it whole. Copying `skills/*` out of the repo breaks the `${CLAUDE_PLUGIN_ROOT}/shared/` references.
+Install the repo **whole**, on any agent — copying `skills/*` out of the repo breaks the `${CLAUDE_PLUGIN_ROOT}/shared/` references.
+
+```bash
+git clone https://github.com/samsantosb/ship-it
+```
+
+### Any agent (Kiro, opencode, Codex, Gemini CLI, Cursor, Zed, aider…)
+
+Point your agent at the cloned repo and tell it to follow [AGENTS.md](AGENTS.md) — it explains everything: resolve `${CLAUDE_PLUGIN_ROOT}` to the repo root, open `skills/<name>/SKILL.md`, follow it top to bottom with the user's argument as input, substitute the few named tools per the equivalence table. Agents that auto-read `AGENTS.md` (opencode, Codex and others) pick the instructions up on their own; for the rest, one line is enough:
+
+```
+Follow /path/to/ship-it/AGENTS.md, then run skills/do-task/SKILL.md on tasks/TASK-007.md
+```
+
+### Claude Code (native plugin)
+
+The repo doubles as a Claude Code plugin and its own marketplace, so skills become slash commands:
 
 ```bash
 # A) Try it for one session:
-git clone https://github.com/samsantosb/ship-it
 claude --plugin-dir ./ship-it
 
-# B) Install permanently — the repo is its own marketplace:
+# B) Install permanently:
 /plugin marketplace add samsantosb/ship-it
 /plugin install ship-it
 ```
-
-Run `/groundwork` inside each project before first use (optional — skills fall back to detection + defaults).
 
 **Headless / fleet invocation** (VMs, CI, automation) — plugin skills are namespaced `/plugin-name:skill-name`:
 
@@ -128,23 +141,27 @@ claude --bare --plugin-dir /path/to/ship-it \
   --allowedTools "Bash,Read,Write,Edit,Glob,Grep"
 ```
 
-`--bare` keeps fleet runs deterministic (no inherited user hooks/MCPs). Run `/groundwork` and `/make-guidelines` attended, once — the automode skills (`do-task`, `watch-pr`, `chaos-engineering`) then run headless: they never hang on questions, they park (`shared/autonomy.md`).
+`--bare` keeps fleet runs deterministic (no inherited user hooks/MCPs).
 
-## Beyond Claude Code (OSS models, Codex, Gemini CLI, Cursor…)
+### First run (any agent)
 
-Nothing in the pipeline requires Claude: skills are plain-markdown playbooks over `git` + `gh`, and the comprehension gates are validated on small models by design. [AGENTS.md](AGENTS.md) tells any other agent how to run them — resolve `${CLAUDE_PLUGIN_ROOT}` to this repo's root, substitute the few named tools per its equivalence table, and follow the same contracts. `/groundwork` writes the per-project index into the target repo's `AGENTS.md` *and* `CLAUDE.md`, so the config is discoverable by every harness. The difference between harnesses is invocation convenience, not capability.
+Run `/groundwork` inside each project before first use (optional — skills fall back to detection + defaults). Run `/groundwork` and `/make-guidelines` attended, once — the automode skills (`do-task`, `watch-pr`, `chaos-engineering`) then run unattended: they never hang on questions, they park (`shared/autonomy.md`).
+
+## Why it's harness-agnostic
+
+Nothing in the pipeline requires a specific model or harness: skills are plain-markdown playbooks over `git` + `gh`/`glab`, and the comprehension gates are validated on small models by design. [AGENTS.md](AGENTS.md) is the portability contract — resolve `${CLAUDE_PLUGIN_ROOT}` to this repo's root, substitute the few named tools per its equivalence table, and follow the same contracts. `/groundwork` writes the per-project index into the target repo's `AGENTS.md` *and* `CLAUDE.md`, so the config is discoverable by every harness. The difference between harnesses is invocation convenience, not capability.
 
 ## Repo layout
 
 ```
-.claude-plugin/   plugin + marketplace manifests — what Claude Code reads to install
+.claude-plugin/   plugin + marketplace manifests — used by harnesses with native plugin support; optional everywhere else
 skills/           the 7 skills — each folder is one slash command
 shared/           the contracts skills load at runtime (${CLAUDE_PLUGIN_ROOT}/shared/…)
 examples/         one worked artifact chain (product doc → card → chaos report) — reference, not runtime
 evals/            the validation battery — rerun after changing any skill; reference, not runtime
 ```
 
-Runtime needs only `.claude-plugin/`, `skills/` and `shared/`. Everything else is documentation.
+Runtime needs only `skills/` and `shared/` (plus `.claude-plugin/` when installed as a plugin). Everything else is documentation.
 
 ## Conventions
 

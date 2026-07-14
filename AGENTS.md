@@ -1,16 +1,16 @@
 # AGENTS.md — running this pipeline on any agent
 
-This repo ships as a Claude Code plugin, but nothing in the pipeline requires Claude: the skills are plain-markdown playbooks, the contracts are plain files, and the tools are `git`, `gh`/`glab` and file edits. Any capable coding agent — OpenAI Codex, Gemini CLI, Cursor, Zed, an OSS model on aider/opencode, GPT-x — can run it by following this page.
+This pipeline is harness-agnostic by design: the skills are plain-markdown playbooks, the contracts are plain files, and the tools are `git`, `gh`/`glab` and file edits. Any capable coding agent — Kiro, opencode, OpenAI Codex, Gemini CLI, Cursor, Zed, aider, Claude Code, an OSS model on any harness — can run it by following this page. (The `.claude-plugin/` manifests exist only for harnesses with native plugin support; nothing else depends on them.)
 
 ## How to run a skill without a skill system
 
-1. Open `skills/<name>/SKILL.md` and follow it top to bottom as your instructions for the task. The user's argument (a card path, a PR number, an idea) is the skill's input. Ignore the YAML frontmatter — it is Claude Code metadata (`disable-model-invocation` included).
+1. Open `skills/<name>/SKILL.md` and follow it top to bottom as your instructions for the task. The user's argument (a card path, a PR number, an idea) is the skill's input. Ignore the YAML frontmatter — it is skill-system metadata for harnesses with native skill support (`disable-model-invocation` included).
 2. Resolve `${CLAUDE_PLUGIN_ROOT}` to **this repository's root**: `${CLAUDE_PLUGIN_ROOT}/shared/guardrails.md` means `shared/guardrails.md` here. "Load before acting" means read those files before doing anything else.
 3. When a skill hands off to another (`/watch-pr <PR>`, `/create-tasks <doc>`), open that skill's `SKILL.md` and continue with the given argument.
 
 ## Tool equivalences
 
-The playbooks name a few Claude Code tools; substitute your harness's equivalent:
+The playbooks name a few tools by their Claude Code names (the reference harness for tool naming); substitute your harness's equivalent:
 
 | In the playbooks | Use instead |
 |---|---|

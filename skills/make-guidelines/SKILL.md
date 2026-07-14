@@ -64,7 +64,7 @@ Header (verbatim): `> Precedence: module GUIDELINES.md > codebase GUIDELINES.md 
 
 ## Step 4 — Wire it in
 
-- `AGENTS.md` **and** `CLAUDE.md` get (or update) a thin `## Guidelines` pointer section (a pointer section = a `##` header + a bulleted list of file paths, no content) — same stanza in both: AGENTS.md serves every other agent (Codex, Gemini CLI, Cursor…), CLAUDE.md serves Claude Code. They are the always-loaded index; content lives in the guideline files, never inline there.
+- `AGENTS.md` **and** `CLAUDE.md` get (or update) a thin `## Guidelines` pointer section (a pointer section = a `##` header + a bulleted list of file paths, no content) — same stanza in both: AGENTS.md serves every other agent (opencode, Kiro, Codex, Gemini CLI, Cursor…), CLAUDE.md serves Claude Code. They are the always-loaded index; content lives in the guideline files, never inline there.
 - `docs/agents/validation.md` `guidelines:` list updated to include the new file(s), so `create-tasks`/`do-task` load them.
 - Same edit discipline as groundwork: pointer sections only, never rewrite the rest of CLAUDE.md.
 

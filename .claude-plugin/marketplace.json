@@ -7,7 +7,7 @@
     {
       "name": "ship-it",
       "source": "./",
-      "description": "Platform-agnostic engineering pipeline: groundwork, make-guidelines, create-product, create-tasks, do-task, watch-pr, chaos-engineering."
+      "description": "Harness-agnostic idea-to-merged-PR pipeline — runs on any coding agent: groundwork, make-guidelines, create-product, create-tasks, do-task, watch-pr, chaos-engineering."
     }
   ]
 }

@@ -101,7 +101,7 @@ Personal facts the user gave you (their Slack member ID, DM preferences) go to *
 
 ### 4 — Wire it into every session (every agent)
 
-Write the `## Agent skills` section into the project's **`AGENTS.md`** (the cross-agent standard — Codex, Gemini CLI, Cursor and others auto-read it) **and** into **`CLAUDE.md`** (what Claude Code auto-loads). Same stanza in both, created when missing, kept in sync on reruns — and never rewrite anything else in either file:
+Write the `## Agent skills` section into the project's **`AGENTS.md`** (the cross-agent standard — opencode, Codex, Gemini CLI, Cursor and others auto-read it) **and** into **`CLAUDE.md`** (what Claude Code auto-loads). Same stanza in both, created when missing, kept in sync on reruns — and never rewrite anything else in either file:
 
 ```markdown
 ## Agent skills
