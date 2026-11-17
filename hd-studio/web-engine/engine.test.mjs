@@ -1,0 +1,13 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {render} from './engine.mjs';
+const config=()=>JSON.parse(readFileSync(new URL('./examples/furniture.json',import.meta.url)));
+test('preview has robots, label, no unknown CTA',()=>{const h=render(config());assert.match(h,/noindex,nofollow/);assert.match(h,/não é um site oficial/);assert.doesNotMatch(h,/wa\.me/);});
+test('verified contact URL encoded',()=>{const c=config();c.contact={verified:true,phone:'5500000000000',message:'Olá & oi'};assert.match(render(c),/5500000000000\?text=Ol%C3%A1%20%26%20oi/);});
+test('production rejects missing approval or verified contact',()=>{const c=config();c.preview=false;assert.throws(()=>render(c));c.approved=true;assert.throws(()=>render(c));});
+test('production approved omits preview tags',()=>{const c=config();c.preview=false;c.approved=true;c.contact={verified:true,phone:'5500000000000'};assert.doesNotMatch(render(c),/noindex|não é um site oficial/);});
+test('escapes content and rejects CSS injection',()=>{const c=config();c.name='<script>alert(1)</script>';assert.doesNotMatch(render(c),/<script>/);c.theme.background='#fff;bad';assert.throws(()=>render(c));});
+test('rejects traversal and remote assets',()=>{for(const image of ['assets/../bad.jpg','https://example.com/a.jpg']){const c=config();c.portfolio=[{image,alt:'a',caption:'b'}];assert.throws(()=>render(c));}});
+test('rejects inadequate contrast and bad phone',()=>{const c=config();c.theme.foreground=c.theme.background;assert.throws(()=>render(c));const d=config();d.contact={verified:true,phone:'abc'};assert.throws(()=>render(d));});
+test('alternative example renders distinct layout',()=>{const c=JSON.parse(readFileSync(new URL('./examples/architecture.json',import.meta.url)));assert.match(render(c),/class="hero centered"/);assert.match(render(config()),/class="hero split"/);});
