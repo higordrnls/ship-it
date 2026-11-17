@@ -1,0 +1,33 @@
+{
+  "name": "Madeira & Forma",
+  "headline": "Espaços pensados para viver.",
+  "description": "Exemplo fictício de apresentação para um estúdio de móveis planejados.",
+  "eyebrow": "Marcenaria contemporânea",
+  "cta": "Solicitar orçamento",
+  "preview": true,
+  "theme": {
+    "background": "#f7f0e6",
+    "foreground": "#30241d",
+    "accent": "#70472f",
+    "onAccent": "#ffffff",
+    "layout": "split",
+    "type": "serif"
+  },
+  "services": [
+    {
+      "title": "Cozinhas",
+      "description": "Soluções de organização e aproveitamento de espaço."
+    },
+    {
+      "title": "Dormitórios",
+      "description": "Planejamento de armazenamento e composição."
+    },
+    {
+      "title": "Ambientes integrados",
+      "description": "Mobiliário pensado para a rotina."
+    }
+  ],
+  "contact": {
+    "verified": false
+  }
+}

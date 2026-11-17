@@ -1,0 +1,29 @@
+{
+  "name": "Estúdio Horizonte",
+  "headline": "Projetar novas possibilidades.",
+  "description": "Exemplo fictício de apresentação para um escritório de arquitetura.",
+  "eyebrow": "Arquitetura e interiores",
+  "cta": "Conversar sobre um projeto",
+  "preview": true,
+  "theme": {
+    "background": "#edf3f0",
+    "foreground": "#15332c",
+    "accent": "#28574b",
+    "onAccent": "#ffffff",
+    "layout": "centered",
+    "type": "sans"
+  },
+  "services": [
+    {
+      "title": "Residencial",
+      "description": "Estudos de espaços de morar."
+    },
+    {
+      "title": "Interiores",
+      "description": "Composição e funcionalidade dos ambientes."
+    }
+  ],
+  "contact": {
+    "verified": false
+  }
+}
